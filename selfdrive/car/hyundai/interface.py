@@ -99,7 +99,7 @@ class CarInterface(object):
       ret.steerRatio = 12.069
       ret.lateralTuning.pid.kiBP, ret.lateralTuning.pid.kpBP = [[0.], [0.]]
       ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.16], [0.01]]
-      ret.minSteerSpeed = 60 * CV.KPH_TO_MS
+      ret.minSteerSpeed = 52 * CV.KPH_TO_MS
     elif candidate == CAR.GENESIS_G90 or candidate == CAR.GENESIS_G80:
       ret.mass = 2200
       ret.wheelbase = 3.15
@@ -257,12 +257,12 @@ class CarInterface(object):
     self.turning_indicator_alert = True if (self.CS.left_blinker_on or self.CS.right_blinker_on == 1) else False
 
     events = []
-    if not ret.gearShifter == 'drive':
-      events.append(create_event('wrongGear', [ET.NO_ENTRY, ET.SOFT_DISABLE]))
-    if ret.doorOpen:
-      events.append(create_event('doorOpen', [ET.NO_ENTRY, ET.SOFT_DISABLE]))
-    if ret.seatbeltUnlatched:
-      events.append(create_event('seatbeltNotLatched', [ET.NO_ENTRY, ET.SOFT_DISABLE]))
+#    if not ret.gearShifter == 'drive':
+#      events.append(create_event('wrongGear', [ET.NO_ENTRY, ET.SOFT_DISABLE]))
+#    if ret.doorOpen:
+#      events.append(create_event('doorOpen', [ET.NO_ENTRY, ET.SOFT_DISABLE]))
+#    if ret.seatbeltUnlatched:
+#      events.append(create_event('seatbeltNotLatched', [ET.NO_ENTRY, ET.SOFT_DISABLE]))
     if self.CS.esp_disabled:
       events.append(create_event('espDisabled', [ET.NO_ENTRY, ET.SOFT_DISABLE]))
     if not self.CS.main_on:
