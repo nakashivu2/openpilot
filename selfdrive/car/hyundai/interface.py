@@ -24,6 +24,7 @@ class CarInterface(object):
     self.lkas_button_on_prev = False
     self.vEgo_prev = False
     self.turning_indicator_alert = False
+    self.force_disable = True
 
     # *** init the major players ***
     self.CS = CarState(CP)
@@ -99,7 +100,8 @@ class CarInterface(object):
       ret.steerRatio = 12.069
       ret.lateralTuning.pid.kiBP, ret.lateralTuning.pid.kpBP = [[0.], [0.]]
       ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.16], [0.01]]
-      ret.minSteerSpeed = 52 * CV.KPH_TO_MS
+      ret.minSteerSpeed = 49 * CV.KPH_TO_MS
+      ret.minEnableSpeed = 54 * CV.KPH_TO_MS
     elif candidate == CAR.GENESIS_G90 or candidate == CAR.GENESIS_G80:
       ret.mass = 2200
       ret.wheelbase = 3.15
@@ -251,7 +253,7 @@ class CarInterface(object):
     # low speed steer alert hysteresis logic (only for cars with steer cut off above 10 m/s)
     if ret.vEgo < self.CP.minSteerSpeed and self.CP.minSteerSpeed > 10.:
       self.low_speed_alert = True
-    if ret.vEgo > self.CP.minSteerSpeed:
+    if ret.vEgo > self.CP.minEnableSpeed:
       self.low_speed_alert = False
 
     self.turning_indicator_alert = True if (self.CS.left_blinker_on or self.CS.right_blinker_on == 1) else False
@@ -277,7 +279,8 @@ class CarInterface(object):
       #events.append(create_event('pcmDisable', [ET.USER_DISABLE]))
 
     # enable request in prius is simple, as we activate when Toyota is active (rising edge)
-    if ret.cruiseState.enabled and not self.cruise_enabled_prev:
+    # AUTO ENABLE WHEN @ MinEnableSpeed
+    if ret.cruiseState.enabled and (not self.cruise_enabled_prev or ret.vEgo > self.CP.minEnableSpeed >= self.vEgo_prev):
       events.append(create_event('pcmEnable', [ET.ENABLE]))
     elif not ret.cruiseState.enabled:
       events.append(create_event('pcmDisable', [ET.USER_DISABLE]))
@@ -295,6 +298,12 @@ class CarInterface(object):
 
     if self.turning_indicator_alert:
       events.append(create_event('turningIndicatorOn', [ET.WARNING]))
+      
+     # FORCE DISABLE BELOW minSteerSpeed
+#    if ret.vEgo < self.CP.minSteerSpeed:
+#      events.append(create_event('speedTooLow', [ET.NO_ENTRY, ET.IMMEDIATE_DISABLE]))
+#    elif ret.vEgo > (self.CP.minSteerSpeed + 1):
+#      self.force_disable = True
 
     ret.events = events
 
