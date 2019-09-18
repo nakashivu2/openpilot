@@ -82,8 +82,8 @@ def data_sample(CI, CC, sm, can_sock, cal_status, cal_perc, overtemp, free_space
 #    events.append(create_event('lowBattery', [ET.NO_ENTRY, ET.SOFT_DISABLE]))
   if overtemp:
     events.append(create_event('overheat', [ET.NO_ENTRY, ET.SOFT_DISABLE]))
-  if free_space:
-    events.append(create_event('outOfSpace', [ET.NO_ENTRY]))
+#  if free_space:
+#    events.append(create_event('outOfSpace', [ET.NO_ENTRY]))
 
 
   # Handle calibration
