@@ -9,7 +9,7 @@ from selfdrive.can.packer import CANPacker
 # Steer torque limits
 
 class SteerLimitParams:
-  STEER_MAX = 299   # 409 is the max, 255 is stock
+  STEER_MAX = 300   # 409 is the max, 255 is stock
   STEER_DELTA_UP = 4
   STEER_DELTA_DOWN = 7
   STEER_DRIVER_ALLOWANCE = 50
@@ -33,7 +33,7 @@ class CarController(object):
   def update(self, enabled, CS, actuators, pcm_cancel_cmd, hud_alert):
 
     if CS.left_blinker_on or CS.right_blinker_on:
-      self.turning_signal_timer = 200  # Disable for 1.0 Seconds after blinker turned off
+      self.turning_signal_timer = 100  # Disable for 1.0 Seconds after blinker turned off
     if self.turning_signal_timer:
       enabled = 0
 
