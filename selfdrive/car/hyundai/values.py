@@ -91,4 +91,4 @@ DBC = {
   CAR.IONIQ: dbc_dict('hyundai_kia_generic', None),
 }
 
-STEER_THRESHOLD = 100
+STEER_THRESHOLD = 300
