@@ -267,8 +267,7 @@ class CarInterface(object):
       self.low_speed_alert = True
     if ret.vEgo > (self.CP.minSteerSpeed + 1.39):
       self.low_speed_alert = False
-     
-
+      
     events = []
 #    if not ret.gearShifter == GearShifter.drive:
 #      events.append(create_event('wrongGear', [ET.NO_ENTRY, ET.SOFT_DISABLE]))
