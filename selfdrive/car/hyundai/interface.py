@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 from cereal import car
+from common.realtime import sec_since_boot
 from selfdrive.config import Conversions as CV
 from selfdrive.controls.lib.drive_helpers import EventTypes as ET, create_event
 from selfdrive.controls.lib.vehicle_model import VehicleModel
@@ -22,6 +23,9 @@ class CarInterface(object):
     self.brake_pressed_prev = False
     self.cruise_enabled_prev = False
     self.low_speed_alert = False
+    self.vEgo_prev = False    
+    self.turning_indicator_alert = False
+    self.force_disable = True    
 
     # *** init the major players ***
     self.CS = CarState(CP)
@@ -259,10 +263,11 @@ class CarInterface(object):
     ret.seatbeltUnlatched = not self.CS.seatbelt
 
     # low speed steer alert hysteresis logic (only for cars with steer cut off above 10 m/s)
-    if ret.vEgo < (self.CP.minSteerSpeed - 1.) and self.CP.minSteerSpeed > 10.:
+    if ret.vEgo < (self.CP.minSteerSpeed - 1.39) and self.CP.minSteerSpeed > 10.:
       self.low_speed_alert = True
     if ret.vEgo > self.CP.minSteerSpeed:
       self.low_speed_alert = False
+     
 
     events = []
 #    if not ret.gearShifter == GearShifter.drive:
@@ -280,7 +285,7 @@ class CarInterface(object):
     if self.CS.steer_error:
       events.append(create_event('steerTempUnavailable', [ET.NO_ENTRY, ET.WARNING]))
 
-    if ret.cruiseState.enabled and not self.cruise_enabled_prev:
+    if ret.cruiseState.enabled and (not self.cruise_enabled_prev or ret.vEgo > self.CP.minSteerSpeed >= self.vEgo_prev):
       events.append(create_event('pcmEnable', [ET.ENABLE]))
     elif not ret.cruiseState.enabled:
       events.append(create_event('pcmDisable', [ET.USER_DISABLE]))
@@ -295,12 +300,16 @@ class CarInterface(object):
 
     if self.low_speed_alert:
       events.append(create_event('belowSteerSpeed', [ET.WARNING]))
+      
+    if self.turning_indicator_alert:
+      events.append(create_event('turningIndicatorOn', [ET.WARNING]))      
 
     ret.events = events
 
     self.gas_pressed_prev = ret.gasPressed
     self.brake_pressed_prev = ret.brakePressed
     self.cruise_enabled_prev = ret.cruiseState.enabled
+    self.vEgo_prev = ret.vEgo
 
     return ret.as_reader()
 
@@ -309,7 +318,7 @@ class CarInterface(object):
     hud_alert = get_hud_alerts(c.hudControl.visualAlert)
     
     # Fix for Genesis hard fault when steer request sent while the speed is low 
-    enable = 0 if self.CS.v_ego < self.CP.minSteerSpeed and self.CP.carFingerprint == CAR.GENESIS else c.enabled
+    enable = 0 if self.CS.v_ego < self.CP.minSteerSpeed or self.turning_indicator_alert or self.low_speed_alert else c.enabled
     
     can_sends = self.CC.update(enable, self.CS, c.actuators,
                                c.cruiseControl.cancel, hud_alert)
