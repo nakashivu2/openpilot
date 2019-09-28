@@ -60,11 +60,11 @@ class Alert(object):
 ALERTS = [
   Alert(
        "turningIndicatorOn",
-       "TAKE CONTROL",
        "Steer Unavailable while Turning",
-       AlertStatus.userPrompt, AlertSize.mid,
+       "TAKE CONTROL",
+       AlertStatus.userPrompt, AlertSize.small,
        Priority.MID, VisualAlert.steerRequired, AudibleAlert.chimeWarning1, 0., 0., 1.),
-  
+
   # Miscellaneous alerts
   Alert(
       "enable",
@@ -222,10 +222,10 @@ ALERTS = [
 
   Alert(
       "belowSteerSpeed",
-      "TAKE CONTROL",
+      "Steer Unavailable Below 31 MPH",
       "Steer Unavailable Below ",
-      AlertStatus.userPrompt, AlertSize.mid,
-      Priority.LOW, VisualAlert.steerRequired, AudibleAlert.chimeWarning1, 0., 0., .1),
+      AlertStatus.userPrompt, AlertSize.small,
+      Priority.MID, VisualAlert.steerRequired, AudibleAlert.chimeWarning1, 0., 0., .1),
 
   Alert(
       "debugAlert",
