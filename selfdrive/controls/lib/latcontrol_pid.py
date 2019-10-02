@@ -26,6 +26,7 @@ class LatControlPID(object):
       if self.kegman.conf['tuneGernby'] == "1":
         self.steerKpV = [float(self.kegman.conf['Kp'])]
         self.steerKiV = [float(self.kegman.conf['Ki'])]
+        self.steerKf = float(self.kegman.conf['Kf'])
         self.pid = PIController((CP.lateralTuning.pid.kpBP, self.steerKpV),
                             (CP.lateralTuning.pid.kiBP, self.steerKiV),
                             k_f=self.steerKf, pos_limit=1.0)
