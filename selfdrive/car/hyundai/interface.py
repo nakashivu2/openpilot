@@ -5,7 +5,7 @@ from selfdrive.config import Conversions as CV
 from selfdrive.controls.lib.drive_helpers import EventTypes as ET, create_event
 from selfdrive.controls.lib.vehicle_model import VehicleModel
 from selfdrive.car.hyundai.carstate import CarState, get_can_parser, get_camera_parser
-from selfdrive.car.hyundai.values import CAMERA_MSGS, CAR, get_hud_alerts, FEATURES
+from selfdrive.car.hyundai.values import CAMERA_MSGS, CAR
 from selfdrive.car import STD_CARGO_KG, scale_rot_inertia, scale_tire_stiffness
 
 GearShifter = car.CarState.GearShifter
@@ -324,7 +324,7 @@ class CarInterface(object):
     enable = 0 if self.CS.v_ego < self.CP.minSteerSpeed or self.turning_indicator_alert or self.low_speed_alert else c.enabled
     
     can_sends = self.CC.update(enable, self.CS, self.frame, c.actuators,
-                               c.cruiseControl.cancel, hud_alert, c.hudControl.leftLaneVisible,
+                               c.cruiseControl.cancel, c.hudControl.visualAlert, c.hudControl.leftLaneVisible,
                                c.hudControl.rightLaneVisible, c.hudControl.leftLaneDepart, c.hudControl.rightLaneDepart)
 
     self.frame += 1
