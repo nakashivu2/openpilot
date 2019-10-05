@@ -5,7 +5,7 @@ from selfdrive.config import Conversions as CV
 from selfdrive.controls.lib.drive_helpers import EventTypes as ET, create_event
 from selfdrive.controls.lib.vehicle_model import VehicleModel
 from selfdrive.car.hyundai.carstate import CarState, get_can_parser, get_camera_parser
-from selfdrive.car.hyundai.values import CAMERA_MSGS, CAR
+from selfdrive.car.hyundai.values import CAMERA_MSGS, CAR, FEATURES
 from selfdrive.car import STD_CARGO_KG, scale_rot_inertia, scale_tire_stiffness
 
 GearShifter = car.CarState.GearShifter
