@@ -324,7 +324,7 @@ class CarInterface(object):
     enable = 0 if self.CS.v_ego < self.CP.minSteerSpeed or self.turning_indicator_alert or self.low_speed_alert else c.enabled
     
     can_sends = self.CC.update(enable, self.CS, self.frame, c.actuators,
-                               c.cruiseControl.cancel, hud_alert, c.hudControl.visualAlert, c.hudControl.leftLaneVisible,
+                               c.cruiseControl.cancel, hud_alert, c.hudControl.leftLaneVisible,
                                c.hudControl.rightLaneVisible, c.hudControl.leftLaneDepart, c.hudControl.rightLaneDepart)
 
     self.frame += 1
