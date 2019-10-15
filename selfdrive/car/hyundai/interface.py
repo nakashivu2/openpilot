@@ -283,8 +283,8 @@ class CarInterface(object):
       events.append(create_event('espDisabled', [ET.NO_ENTRY, ET.SOFT_DISABLE]))
 #    if not self.CS.main_on:
 #      events.append(create_event('wrongCarMode', [ET.NO_ENTRY, ET.USER_DISABLE]))
-#    if ret.gearShifter == GearShifter.reverse:
-#      events.append(create_event('reverseGear', [ET.NO_ENTRY, ET.IMMEDIATE_DISABLE]))
+    if ret.gearShifter == GearShifter.reverse:
+      events.append(create_event('reverseGear', [ET.NO_ENTRY, ET.IMMEDIATE_DISABLE]))
     if self.CS.steer_error:
       events.append(create_event('steerTempUnavailable', [ET.NO_ENTRY, ET.WARNING]))
     if ret.vEgo > self.CP.minSteerSpeed >= self.vEgo_prev:
