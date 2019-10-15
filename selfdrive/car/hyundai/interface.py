@@ -274,7 +274,7 @@ class CarInterface(object):
       
     events = []
     if not ret.gearShifter == GearShifter.drive:
-      events.append(create_event('wrongGear', [ET.ENABLE]]))
+      events.append(create_event('pcmEnable', [ET.ENABLE]]))
 #    if ret.doorOpen:
 #      events.append(create_event('doorOpen', [ET.NO_ENTRY, ET.SOFT_DISABLE]))
 #    if ret.seatbeltUnlatched:
