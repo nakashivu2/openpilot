@@ -20,9 +20,9 @@ class CarInterface(object):
     self.gas_pressed_prev = False
     self.brake_pressed_prev = False
     self.cruise_enabled_prev = False
-    self.vEgo_prev = False    
+    self.vEgo_prev = False
     self.turning_indicator_alert = False
-    self.force_disable = True    
+    self.force_disable = True
 
     # *** init the major players ***
     self.CS = CarState(CP)
@@ -55,11 +55,11 @@ class CarInterface(object):
 
     ret.steerActuatorDelay = 0.1  # Default delay
     ret.steerRateCost = 0.5
-    
+
     tire_stiffness_factor = 1.
 
     ret.minEnableSpeed = -1.   # enable is done by stock ACC, so ignore this
-    
+
     if candidate in [CAR.SANTA_FE, CAR.SANTA_FE_1]:
       ret.lateralTuning.pid.kf = 0.00005
       ret.mass = 3982. * CV.LB_TO_KG + STD_CARGO_KG
@@ -267,11 +267,11 @@ class CarInterface(object):
       self.low_speed_alert = True
     if ret.vEgo > (self.CP.minSteerSpeed + 1.39):
       self.low_speed_alert = False
-      
+
     # turning indicator alert hysteresis logic
     self.turning_indicator_alert = True if self.CS.left_blinker_on or self.CS.right_blinker_on else False
 
-      
+
     events = []
 #    if not ret.gearShifter == GearShifter.drive:
 #      events.append(create_event('wrongGear', [ET.NO_ENTRY, ET.SOFT_DISABLE]))
@@ -303,9 +303,9 @@ class CarInterface(object):
 
     if self.low_speed_alert:
       events.append(create_event('belowSteerSpeed', [ET.WARNING]))
-      
+
     if self.turning_indicator_alert:
-      events.append(create_event('turningIndicatorOn', [ET.WARNING]))      
+      events.append(create_event('turningIndicatorOn', [ET.WARNING]))
 
     ret.events = events
 
