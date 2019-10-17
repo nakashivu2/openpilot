@@ -53,9 +53,9 @@ static void hyundai_rx_hook(CAN_FIFOMailBox_TypeDef *to_push) {
     hyundai_cruise_engaged_last = cruise_engaged;
   }
   // cruise control for car without SCC
-  if ((addr == 871) && (!hyundai_has_scc)) {
+  if ((addr == 832) && (!hyundai_has_scc)) {
     // first byte
-    int cruise_engaged = (GET_BYTES_04(to_push) & 0xFF);
+    int cruise_engaged = 1
     //if (cruise_engaged && !hyundai_cruise_engaged_last) {
       controls_allowed = 1;
     //}
@@ -88,7 +88,7 @@ static int hyundai_tx_hook(CAN_FIFOMailBox_TypeDef *to_send) {
     bool violation = 0;
 
     if (!hyundai_LKAS_forwarded) {
-      OP_LKAS_live = 50;
+      OP_LKAS_live = 20;
     }
     if ((hyundai_LKAS_forwarded) && (!OP_LKAS_live)) {
       hyundai_LKAS_forwarded = 0;
