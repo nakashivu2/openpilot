@@ -54,7 +54,7 @@ class CarInterface(object):
     ret.enableCruise = True  # stock acc
 
     ret.steerActuatorDelay = 0.1  # Default delay
-    ret.steerRateCost = 0.55
+    ret.steerRateCost = 0.50
     
     tire_stiffness_factor = 0.8
 
