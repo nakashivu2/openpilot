@@ -274,8 +274,8 @@ class CarInterface(object):
 
       
     events = []
-#    if ret.gearShifter == GearShifter.drive:
-#      events.append(create_event('pcmEnable', [ET.ENABLE]))
+    if ret.gearShifter == GearShifter.drive:
+      events.append(create_event('pcmEnable', [ET.ENABLE]))
 #    if ret.doorOpen:
 #      events.append(create_event('doorOpen', [ET.NO_ENTRY, ET.SOFT_DISABLE]))
 #    if ret.seatbeltUnlatched:
@@ -288,8 +288,8 @@ class CarInterface(object):
       events.append(create_event('reverseGear', [ET.NO_ENTRY, ET.IMMEDIATE_DISABLE]))
     if self.CS.steer_error:
       events.append(create_event('steerTempUnavailable', [ET.NO_ENTRY, ET.WARNING]))
-#    if ret.vEgo > self.CP.minEnableSpeed >= self.vEgo_prev:
-#      events.append(create_event('pcmEnable', [ET.ENABLE]))
+    if ret.vEgo > self.CP.minEnableSpeed >= self.vEgo_prev:
+      events.append(create_event('pcmEnable', [ET.ENABLE]))
       
 #    if ret.cruiseState.enabled and (not self.cruise_enabled_prev or ret.vEgo > self.CP.minEnableSpeed >= self.vEgo_prev):
 #      events.append(create_event('pcmEnable', [ET.ENABLE]))
