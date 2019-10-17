@@ -264,10 +264,10 @@ class CarInterface(object):
     ret.seatbeltUnlatched = not self.CS.seatbelt
 
     # low speed steer alert hysteresis logic (only for cars with steer cut off above 10 m/s)
-    if ret.vEgo < self.CP.minSteerSpeed and self.CP.minSteerSpeed > 10.:
-      self.low_speed_alert = True
-    if ret.vEgo > self.CP.minEnableSpeed:
-      self.low_speed_alert = False
+#   if ret.vEgo < self.CP.minSteerSpeed and self.CP.minSteerSpeed > 10.:
+ #     self.low_speed_alert = True
+ #   if ret.vEgo > self.CP.minEnableSpeed:
+ #     self.low_speed_alert = False
       
     # turning indicator alert hysteresis logic
     self.turning_indicator_alert = True if self.CS.left_blinker_on or self.CS.right_blinker_on else False
