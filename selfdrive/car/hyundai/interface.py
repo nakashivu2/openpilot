@@ -86,8 +86,8 @@ class CarInterface(object):
       tire_stiffness_factor = 0.8
       ret.lateralTuning.pid.kiBP, ret.lateralTuning.pid.kpBP = [[0.], [0.]]
       ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.15], [0.05]]
-      ret.minSteerSpeed = 32 * CV.MPH_TO_MS
-      ret.minEnableSpeed = 32 * CV.MPH_TO_MS
+      ret.minSteerSpeed = 31 * CV.MPH_TO_MS
+      ret.minEnableSpeed = 31 * CV.MPH_TO_MS
     elif candidate == CAR.GENESIS:
       ret.lateralTuning.pid.kf = 0.00014
       ret.mass = 2060. + STD_CARGO_KG
@@ -274,8 +274,8 @@ class CarInterface(object):
 
       
     events = []
-#    if ret.gearShifter == GearShifter.drive:
-#      events.append(create_event('pcmEnable', [ET.ENABLE]))
+    if ret.gearShifter == GearShifter.drive:
+      events.append(create_event('pcmEnable', [ET.ENABLE]))
 #    if ret.doorOpen:
 #      events.append(create_event('doorOpen', [ET.NO_ENTRY, ET.SOFT_DISABLE]))
 #    if ret.seatbeltUnlatched:
