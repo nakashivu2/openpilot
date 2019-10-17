@@ -244,21 +244,21 @@ class CarInterface(object):
     # TODO: button presses
     buttonEvents = []
 
-    if self.CS.left_blinker_flash != self.CS.prev_left_blinker_flash:
+    if self.CS.left_blinker_on != self.CS.prev_left_blinker_on:
       be = car.CarState.ButtonEvent.new_message()
       be.type = ButtonType.leftBlinker
-      be.pressed = self.CS.left_blinker_flash != 0
+      be.pressed = self.CS.left_blinker_on != 0
       buttonEvents.append(be)
 
-    if self.CS.right_blinker_flash != self.CS.prev_right_blinker_flash:
+    if self.CS.right_blinker_on != self.CS.prev_right_blinker_on:
       be = car.CarState.ButtonEvent.new_message()
       be.type = ButtonType.rightBlinker
-      be.pressed = self.CS.right_blinker_flash != 0
+      be.pressed = self.CS.right_blinker_on != 0
       buttonEvents.append(be)
 
     ret.buttonEvents = buttonEvents
-    ret.leftBlinker = bool(self.CS.left_blinker_flash)
-    ret.rightBlinker = bool(self.CS.right_blinker_flash)
+    ret.leftBlinker = bool(self.CS.left_blinker_on)
+    ret.rightBlinker = bool(self.CS.right_blinker_on)
 
     ret.doorOpen = not self.CS.door_all_closed
     ret.seatbeltUnlatched = not self.CS.seatbelt
@@ -270,7 +270,7 @@ class CarInterface(object):
       self.low_speed_alert = False
       
     # turning indicator alert hysteresis logic
-    self.turning_indicator_alert = True if self.CS.left_blinker_flash or self.CS.right_blinker_flash else False
+    self.turning_indicator_alert = True if self.CS.left_blinker_on or self.CS.right_blinker_on else False
 
       
     events = []
