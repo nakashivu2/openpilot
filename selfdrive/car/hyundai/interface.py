@@ -87,7 +87,7 @@ class CarInterface(object):
       ret.lateralTuning.pid.kiBP, ret.lateralTuning.pid.kpBP = [[0.], [0.]]
       ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.25], [0.05]]
       ret.minSteerSpeed = 32 * CV.MPH_TO_MS
-      ret.minEnableSpeed = 40 * CV.MPH_TO_MS
+      ret.minEnableSpeed = 32 * CV.MPH_TO_MS
     elif candidate == CAR.GENESIS:
       ret.lateralTuning.pid.kf = 0.00014
       ret.mass = 2060. + STD_CARGO_KG
@@ -266,7 +266,7 @@ class CarInterface(object):
     # low speed steer alert hysteresis logic (only for cars with steer cut off above 10 m/s)
     if ret.vEgo < self.CP.minSteerSpeed and self.CP.minSteerSpeed > 10.:
       self.low_speed_alert = True
-    if ret.vEgo > (self.CP.minSteerSpeed + 1.39):
+    if ret.vEgo > self.CP.minEnableSpeed:
       self.low_speed_alert = False
       
     # turning indicator alert hysteresis logic
